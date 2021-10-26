@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Providus Stock</string>
+
+    <!--Personalizados-->
+    <string name="cantidad">Cantidad:</string>
+    <string name="btnguardar">Guardar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    
+    <!--    Personalizados-->
+    <string name="cartuchos">Cartuchos</string>
+    <string name="toners">Toners</string>
+    <string name="atencion">¡Atención! Presióname.</string>
+</resources>
