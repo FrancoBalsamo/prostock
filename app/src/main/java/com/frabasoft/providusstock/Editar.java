@@ -24,6 +24,7 @@ import java.util.Map;
 public class Editar extends AppCompatActivity {
     private final boolean actualizar = true;
     String url;
+    String position;
     private EditText etEditarCantidad;
     private final String mensajeVacio = "No puede estar vacío ni el valor debe ser 0 (cero)";
     String fechaHoy;
@@ -34,6 +35,7 @@ public class Editar extends AppCompatActivity {
         setContentView(R.layout.activity_editar);
         url = getIntent().getStringExtra("url");
         String idC = getIntent().getStringExtra("id");
+        position = getIntent().getStringExtra("position");
         int id = Integer.parseInt(idC);
         String cantidad = getIntent().getStringExtra("cantidad");
         traerFechaHoy();
@@ -76,6 +78,9 @@ public class Editar extends AppCompatActivity {
                     Toast.makeText(Editar.this, "Modificado con éxito.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent();
                     intent.putExtra("update", actualizar);
+                    intent.putExtra("posicion", Integer.parseInt(position));
+                    intent.putExtra("cantidad", cant);
+                    intent.putExtra("fec", fechaHoy);
                     setResult(Activity.RESULT_OK, intent);
                     Editar.this.finish();
                 }

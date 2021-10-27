@@ -3,6 +3,7 @@ package com.frabasoft.providusstock.Fragmentos;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
@@ -143,10 +144,16 @@ public class ListadoCartuchos extends Fragment {
                     Bundle bundle = data.getExtras();
 
                     boolean update = bundle.getBoolean("update");
+                    int position = bundle.getInt("posicion");
+                    int cantidad = bundle.getInt("cantidad");
+                    String fe = bundle.getString("fec");
+                    Cartuchos cartuchos = new Cartuchos();
+                    cartuchos.setCantidad(cantidad);
 
                     Log.i("INTENTO", "onActivityResult() actualizar? : " + update );
 
                     if(update){
+                        adaptador.updateItem(cartuchos, position);
                         Toast.makeText(getActivity(), "Actualizado jejox", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "No actul je", Toast.LENGTH_SHORT).show();

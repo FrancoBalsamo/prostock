@@ -148,4 +148,11 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
             }
         }
     }
+
+    public void updateItem(Cartuchos item, int position){ //the method that i'm use to update data
+        //Update array
+        mValues.set(position, item);
+        //update item in adapter.
+        notifyItemChanged(position);
+    }
 }
