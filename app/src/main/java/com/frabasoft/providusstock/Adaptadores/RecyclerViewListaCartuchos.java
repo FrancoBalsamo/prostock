@@ -141,7 +141,6 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
                 abrirEditar.putExtra("id", String.valueOf(item.getIdCartucho()));
                 abrirEditar.putExtra("cantidad", String.valueOf(item.getCantidad()));
                 abrirEditar.putExtra("url", url);
-                abrirEditar.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 listadoCartuchos.mStartForResult.launch(abrirEditar);
                 //mContext.startActivity(abrirEditar);
             }else{
