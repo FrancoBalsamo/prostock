@@ -44,7 +44,6 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(RecyclerViewListaCartuchos.ViewHolder Vholder, int position) {
         Vholder.setData(mValues.get(position));
-
     }
 
     @Override
@@ -84,7 +83,7 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
             modeloColor.setText(dato);
             tv_fecha_mod_usuario_mod.setText(fec_us);
 
-            if(item.getModelo().contains("73")){
+            if(item.getModelo().equals("73")){
                 iv_cartucho_img.setImageResource(R.drawable.sietetresn);
             }
             if(item.getModelo().contains("90")){
@@ -149,10 +148,8 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public void updateItem(Cartuchos item, int position){ //the method that i'm use to update data
-        //Update array
+    public void updateItem(Cartuchos item, int position){
         mValues.set(position, item);
-        //update item in adapter.
         notifyItemChanged(position);
     }
 }
