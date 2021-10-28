@@ -76,6 +76,7 @@ public class ListadoCartuchos extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://frabasoft.com.ar/pstock/select_listado_cartuchos.php",
                 response -> {
                     try {
+                        arrayList.clear();
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -155,10 +156,11 @@ public class ListadoCartuchos extends Fragment {
                     Log.i("INTENTO", "onActivityResult() actualizar? : " + update + "\n datos: Posición: " + position + " / Cantidad: " + cantidad + " / Fecha hoy: " + fe);
 
                     if(update){
-                        adaptador.updateItem(cartuchos, position);
-                        Toast.makeText(getActivity(), "Actualizado jejox", Toast.LENGTH_SHORT).show();
+                        //adaptador.notifyDataSetChanged();
+                        listadoCartuchos();
+                        adaptador.notifyItemChanged(position);
                     }else{
-                        Toast.makeText(getActivity(), "No actul je", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "No actualizado.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
