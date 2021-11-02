@@ -3,7 +3,6 @@ package com.frabasoft.providusstock.Fragmentos;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
@@ -17,12 +16,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.frabasoft.providusstock.Adaptadores.RecyclerViewListaCartuchos;
 import com.frabasoft.providusstock.Adaptadores.RecyclerViewListaToners;
 import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.Clases.ConexionInternet;
@@ -39,15 +36,15 @@ public class ListadoToners extends Fragment {
     RecyclerView recyclerView;
     ArrayList<Toners> arrayList;
     ArrayList<Toners> tonersArrayList;
-    String infoToners;
     RecyclerViewListaToners adaptador;
+    View view;
 
     public ListadoToners() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listado_toners, container, false);
+        view = inflater.inflate(R.layout.fragment_listado_toners, container, false);
 
         tonersArrayList = new ArrayList<>();
         arrayList = new ArrayList<>();
@@ -62,7 +59,7 @@ public class ListadoToners extends Fragment {
         listadoToners();
 
         alerta.setOnClickListener(v -> {
-            if (ConexionInternet.estaConectado(getContext())) {
+            if (ConexionInternet.estaConectado(view.getContext())) {
                 alertToners();
             }else{
                 Toast.makeText(getContext(), "Conéctate a una red.", Toast.LENGTH_SHORT).show();
@@ -87,13 +84,13 @@ public class ListadoToners extends Fragment {
                             int cantidad = jsonObject1.getInt("cantidad");
                             arrayList.add(new Toners(id, modelo, color, fec, cantidad));
                         }
-                        adaptador = new RecyclerViewListaToners(getActivity(), arrayList);
+                        adaptador = new RecyclerViewListaToners(getActivity(), arrayList, ListadoToners.this);
                         recyclerView.setAdapter(adaptador);
                     } catch (JSONException e) {
                         Log.d("Listado", "listadoToners: " + e.getMessage());
                     }
                 }, Throwable::printStackTrace);
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext().getApplicationContext());
         requestQueue.add(stringRequest);
     }
 
@@ -119,20 +116,18 @@ public class ListadoToners extends Fragment {
                         Log.d("MainAcExc", "cargarAlertaToners: " + e.getMessage());
                     }
                 }, Throwable::printStackTrace);
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         requestQueue.add(stringRequest);
     }
 
     private void alertToners(){
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        StringBuilder sb = new StringBuilder();
+        AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
         alertDialog.setTitle("¡Atención!");
         for(int c = 0; c < tonersArrayList.size(); c++){
-            infoToners += tonersArrayList.get(c).getModelo() + " " + tonersArrayList.get(c).getColor() + " - Cantidad: " + tonersArrayList.get(c).getCantidad() + "\n";
-            if(infoToners.contains("null")){
-                infoToners = infoToners.replace("null", "");
-            }
+            sb.append(tonersArrayList.get(c).getModelo()).append(" ").append(tonersArrayList.get(c).getColor()).append(" - Cantidad: ").append(tonersArrayList.get(c).getCantidad()).append("\n");
         }
-        alertDialog.setMessage("Se deben reponer los siguientes toners: \n\n" + infoToners);
+        alertDialog.setMessage("Se deben reponer los siguientes toners: \n\n" + sb);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Cerrar", (dialog, which) -> { alertDialog.dismiss(); tonersArrayList.clear();});
         alertDialog.show();
     }
