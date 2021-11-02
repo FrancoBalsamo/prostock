@@ -16,16 +16,12 @@ import com.frabasoft.providusstock.Clases.ConexionInternet;
 import com.frabasoft.providusstock.Editar;
 import com.frabasoft.providusstock.Fragmentos.ListadoCartuchos;
 import com.frabasoft.providusstock.R;
-
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerViewListaCartuchos.ViewHolder> {
     ArrayList<Cartuchos> mValues;
     Context mContext;
     String url = "http://frabasoft.com.ar/pstock/editar_cantidad_cartuchos.php";
-    int itemPosition;
     ListadoCartuchos listadoCartuchos;
 
     public RecyclerViewListaCartuchos(Context context, ArrayList<Cartuchos> values, ListadoCartuchos listadoCartuchos) {
@@ -132,7 +128,6 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
 
         @Override
         public void onClick(View view) {
-            itemPosition = getLayoutPosition();
             if(ConexionInternet.estaConectado(mContext)){
                 Intent abrirEditar = new Intent(mContext, Editar.class);
                 int itemPosition = getLayoutPosition();
@@ -141,15 +136,9 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
                 abrirEditar.putExtra("cantidad", String.valueOf(item.getCantidad()));
                 abrirEditar.putExtra("url", url);
                 listadoCartuchos.mStartForResult.launch(abrirEditar);
-                //mContext.startActivity(abrirEditar);
             }else{
                 Toast.makeText(mContext, "Conéctate a una red.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    public void updateItem(Cartuchos item, int position){
-        mValues.set(position, item);
-        notifyItemChanged(position);
     }
 }

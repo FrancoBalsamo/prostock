@@ -156,7 +156,6 @@ public class ListadoCartuchos extends Fragment {
                     Log.i("INTENTO", "onActivityResult() actualizar? : " + update + "\n datos: Posición: " + position + " / Cantidad: " + cantidad + " / Fecha hoy: " + fe);
 
                     if(update){
-                        //adaptador.notifyDataSetChanged();
                         listadoCartuchos();
                         adaptador.notifyItemChanged(position);
                     }else{

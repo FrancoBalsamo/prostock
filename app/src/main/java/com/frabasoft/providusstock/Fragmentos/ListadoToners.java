@@ -1,6 +1,11 @@
 package com.frabasoft.providusstock.Fragmentos;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +22,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.frabasoft.providusstock.Adaptadores.RecyclerViewListaCartuchos;
 import com.frabasoft.providusstock.Adaptadores.RecyclerViewListaToners;
+import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.Clases.ConexionInternet;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.R;
@@ -33,6 +40,7 @@ public class ListadoToners extends Fragment {
     ArrayList<Toners> arrayList;
     ArrayList<Toners> tonersArrayList;
     String infoToners;
+    RecyclerViewListaToners adaptador;
 
     public ListadoToners() { }
 
@@ -68,6 +76,7 @@ public class ListadoToners extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://frabasoft.com.ar/pstock/select_listado_toners.php",
                 response -> {
                     try {
+                        arrayList.clear();
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -78,7 +87,7 @@ public class ListadoToners extends Fragment {
                             int cantidad = jsonObject1.getInt("cantidad");
                             arrayList.add(new Toners(id, modelo, color, fec, cantidad));
                         }
-                        RecyclerViewListaToners adaptador = new RecyclerViewListaToners(getActivity(), arrayList);
+                        adaptador = new RecyclerViewListaToners(getActivity(), arrayList);
                         recyclerView.setAdapter(adaptador);
                     } catch (JSONException e) {
                         Log.d("Listado", "listadoToners: " + e.getMessage());
@@ -127,4 +136,33 @@ public class ListadoToners extends Fragment {
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Cerrar", (dialog, which) -> { alertDialog.dismiss(); tonersArrayList.clear();});
         alertDialog.show();
     }
+
+    public ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.i("INTENTO", "onActivityResult() " + result.getResultCode());
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    Bundle bundle = data.getExtras();
+
+                    boolean update = bundle.getBoolean("update");
+                    int position = bundle.getInt("posicion");
+                    int cantidad = bundle.getInt("cantidad");
+                    String fe = bundle.getString("fec");
+
+                    Cartuchos cartuchos = new Cartuchos();
+
+                    cartuchos.setCantidad(cantidad);
+                    cartuchos.setFechaModificacion(fe);
+
+                    Log.i("INTENTO", "onActivityResult() actualizar? : " + update + "\n datos: Posición: " + position + " / Cantidad: " + cantidad + " / Fecha hoy: " + fe);
+
+                    if(update){
+                        listadoToners();
+                        adaptador.notifyItemChanged(position);
+                    }else{
+                        Toast.makeText(getActivity(), "No actualizado.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 }

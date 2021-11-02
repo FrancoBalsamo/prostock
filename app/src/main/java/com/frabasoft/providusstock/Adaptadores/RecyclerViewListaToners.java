@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frabasoft.providusstock.Clases.ConexionInternet;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.Editar;
+import com.frabasoft.providusstock.Fragmentos.ListadoToners;
 import com.frabasoft.providusstock.R;
 import java.util.ArrayList;
 
@@ -21,17 +22,20 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
     String url = "http://frabasoft.com.ar/pstock/editar_cantidad_toners.php";
     ArrayList<Toners> tonersArrayList;
     Context context;
+    int itemPosition;
+    ListadoToners listadoToners;
 
-    public RecyclerViewListaToners(Context context, ArrayList<Toners> tonersArrayList){
+    public RecyclerViewListaToners(Context context, ArrayList<Toners> tonersArrayList, ListadoToners listadoToners){
         this.tonersArrayList = tonersArrayList;
         this.context = context;
+        this.listadoToners = listadoToners;
     }
 
     @NonNull
     @Override
     public RecyclerViewListaToners.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType){
         View view = LayoutInflater.from(context).inflate(R.layout.vista_diseno_toner, viewGroup, false);
-        return new RecyclerViewListaToners.ViewHolder(view);
+        return new RecyclerViewListaToners.ViewHolder(view, listadoToners);
     }
 
     @Override
@@ -50,10 +54,12 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
         public ImageView ivToner;
         public View view;
         Toners toners;
+        ListadoToners listadoToners;
 
-        public ViewHolder(View v){
+        public ViewHolder(View v, ListadoToners listadoToners){
             super(v);
             view = v;
+            this.listadoToners = listadoToners;
 
             v.setOnClickListener(this);
             cardView = v.findViewById(R.id.cardViewToner);
@@ -154,11 +160,12 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
         public void onClick(View view){
             if(ConexionInternet.estaConectado(context)){
                 Intent abrirEditar = new Intent(context, Editar.class);
+                int itemPosition = getLayoutPosition();
+                abrirEditar.putExtra("position", String.valueOf(itemPosition));
                 abrirEditar.putExtra("id", String.valueOf(toners.getIdToner()));
                 abrirEditar.putExtra("cantidad", String.valueOf(toners.getCantidad()));
                 abrirEditar.putExtra("url", url);
-                abrirEditar.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(abrirEditar);
+                listadoToners.mStartForResult.launch(abrirEditar);
             }else{
                 Toast.makeText(context, "Conéctate a una red.", Toast.LENGTH_SHORT).show();
             }
