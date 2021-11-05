@@ -22,7 +22,6 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
     String url = "http://frabasoft.com.ar/pstock/editar_cantidad_toners.php";
     ArrayList<Toners> tonersArrayList;
     Context context;
-    int itemPosition;
     ListadoToners listadoToners;
 
     public RecyclerViewListaToners(Context context, ArrayList<Toners> tonersArrayList, ListadoToners listadoToners){
