@@ -3,12 +3,14 @@
 
     <!--Personalizados-->
     <string name="cantidad">Cantidad:</string>
+    <string name="modelo">Modelo:</string>
+    <string name="color">Color:</string>
     <string name="btnguardar">Guardar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    
-    <!--    Personalizados-->
     <string name="cartuchos">Cartuchos</string>
     <string name="toners">Toners</string>
     <string name="atencion">¡Atención! Presióname.</string>
+    <string name="anadir">Añadir</string>
+    <string name="fragmento_cartuchos_listado">ListadoCartuchosTag</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

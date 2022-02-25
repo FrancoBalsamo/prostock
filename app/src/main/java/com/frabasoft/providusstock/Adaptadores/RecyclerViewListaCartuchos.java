@@ -13,131 +13,123 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.Clases.ConexionInternet;
-import com.frabasoft.providusstock.Editar;
-import com.frabasoft.providusstock.Fragmentos.ListadoCartuchos;
+import com.frabasoft.providusstock.Actividades.Editar.EditarCartuchos;
 import com.frabasoft.providusstock.R;
 import java.util.ArrayList;
 
 public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerViewListaCartuchos.ViewHolder> {
-    ArrayList<Cartuchos> mValues;
-    Context mContext;
-    String url = "http://frabasoft.com.ar/pstock/editar_cantidad_cartuchos.php";
-    ListadoCartuchos listadoCartuchos;
+    ArrayList<Cartuchos> cartuchosArrayList;
+    Context context;
 
-    public RecyclerViewListaCartuchos(Context context, ArrayList<Cartuchos> values, ListadoCartuchos listadoCartuchos) {
-        mValues = values;
-        mContext = context;
-        this.listadoCartuchos = listadoCartuchos;
+    public RecyclerViewListaCartuchos(Context context, ArrayList<Cartuchos> cartuchosArrayList) {
+        this.context = context;
+        this.cartuchosArrayList = cartuchosArrayList;
     }
 
     @NonNull
     @Override
     public RecyclerViewListaCartuchos.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.vista_diseno_cartucho, parent, false);
-        return new RecyclerViewListaCartuchos.ViewHolder(view, listadoCartuchos);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.vista_diseno_cartucho, null);
+
+        return new RecyclerViewListaCartuchos.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewListaCartuchos.ViewHolder Vholder, int position) {
-        Vholder.setData(mValues.get(position));
+        Vholder.setData(cartuchosArrayList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return cartuchosArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public CardView cardView;
         public TextView idCartucho;
         public TextView modeloColor;
-        public TextView tv_fecha_mod_usuario_mod;
-        public ImageView iv_cartucho_img;
-        public View layout;
-        Cartuchos item;
-        ListadoCartuchos listadoCartuchos;
+        public TextView fechaModificacion;
+        public ImageView ivCartucho;
+        Cartuchos cartuchos;
 
-        public ViewHolder(View v, ListadoCartuchos listadoCartuchos) {
+        public ViewHolder(View v ) {
             super(v);
-            layout = v;
-            this.listadoCartuchos = listadoCartuchos;
 
             v.setOnClickListener(this);
             cardView = v.findViewById(R.id.cardViewCartucho);
             idCartucho = v.findViewById(R.id.idCartucho);
             modeloColor = v.findViewById(R.id.tvModeloColorCartucho);
-            tv_fecha_mod_usuario_mod = v.findViewById(R.id.tvFechaModificacionCartucho);
-            iv_cartucho_img = v.findViewById(R.id.ivCartuchoImagen);
+            fechaModificacion = v.findViewById(R.id.tvFechaModificacionCartucho);
+            ivCartucho = v.findViewById(R.id.ivCartuchoImagen);
         }
 
-        public void setData(Cartuchos item) {
-            this.item = item;
-            String dato = item.getModelo() + " " + item.getColor() + " - Cantidad: " + item.getCantidad();
-            String idC = String.valueOf(item.getIdCartucho());
-            String fec_us = "Última actualización: " + item.getFechaModificacion();
+        public void setData(Cartuchos cartuchos) {
+            this.cartuchos = cartuchos;
+            String dato = cartuchos.getModelo() + " " + cartuchos.getColor() + " - Cantidad: " + cartuchos.getCantidad();
+            String idC = String.valueOf(cartuchos.getIdCartucho());
+            String fechaMod = "Última actualización: " + cartuchos.getFechaModificacion();
             idCartucho.setText(idC);
             modeloColor.setText(dato);
-            tv_fecha_mod_usuario_mod.setText(fec_us);
+            fechaModificacion.setText(fechaMod);
 
-            if(item.getModelo().equals("73")){
-                iv_cartucho_img.setImageResource(R.drawable.sietetresn);
+            if(cartuchos.getModelo().equals("73")){
+                ivCartucho.setImageResource(R.drawable.sietetresn);
             }
-            if(item.getModelo().contains("90")){
-                iv_cartucho_img.setImageResource(R.drawable.nueveceron);
+            if(cartuchos.getModelo().equals("90")){
+                ivCartucho.setImageResource(R.drawable.nueveceron);
             }
-            if(item.getModelo().contains("117")){
-                iv_cartucho_img.setImageResource(R.drawable.unounosiete);
+            if(cartuchos.getModelo().equals("117")){
+                ivCartucho.setImageResource(R.drawable.unounosiete);
             }
-            if(item.getModelo().contains("195")){
-                iv_cartucho_img.setImageResource(R.drawable.unonuevecinco);
+            if(cartuchos.getModelo().equals("133")){
+                ivCartucho.setImageResource(R.drawable.unotrestres);
             }
-            if(item.getModelo().contains("196")){
-                iv_cartucho_img.setImageResource(R.drawable.unonueveseis);
+            if(cartuchos.getModelo().equals("135")){
+                ivCartucho.setImageResource(R.drawable.unotrescinco);
             }
-            if(item.getModelo().contains("206")){
-                iv_cartucho_img.setImageResource(R.drawable.dosceroseis);
+            if(cartuchos.getModelo().equals("195")){
+                ivCartucho.setImageResource(R.drawable.unonuevecinco);
             }
-            if(item.getModelo().contains("296")){
-                iv_cartucho_img.setImageResource(R.drawable.dosnueveseis);
+            if(cartuchos.getModelo().equals("196") ){
+                ivCartucho.setImageResource(R.drawable.unonueveseis);
             }
-            if(item.getModelo().contains("E2061")){
-                iv_cartucho_img.setImageResource(R.drawable.edosceroseisuno);
+            if(cartuchos.getModelo().equals("206")){
+                ivCartucho.setImageResource(R.drawable.dosceroseis);
             }
-            if(item.getModelo().contains("135")){
-                iv_cartucho_img.setImageResource(R.drawable.unotrescinco);
+            if(cartuchos.getModelo().equals("296")){
+                ivCartucho.setImageResource(R.drawable.dosnueveseis);
             }
-            if(item.getModelo().contains("T6644")){
-                iv_cartucho_img.setImageResource(R.drawable.vertec);
+            if(cartuchos.getModelo().contains("544")){
+                ivCartucho.setImageResource(R.drawable.tcincocuatrocuatro);
             }
-            if(item.getModelo().contains("T6643")){
-                iv_cartucho_img.setImageResource(R.drawable.vertec);
+            if(cartuchos.getModelo().equals("E2061")){
+                ivCartucho.setImageResource(R.drawable.edosceroseisuno);
             }
-            if(item.getModelo().contains("T6642")){
-                iv_cartucho_img.setImageResource(R.drawable.vertec);
+            if(cartuchos.getModelo().equals("T6644")){
+                ivCartucho.setImageResource(R.drawable.vertec);
             }
-            if(item.getModelo().contains("T6641")){
-                iv_cartucho_img.setImageResource(R.drawable.vertec);
+            if(cartuchos.getModelo().equals("T6643")){
+                ivCartucho.setImageResource(R.drawable.vertec);
             }
-            if(item.getModelo().contains("544")){
-                iv_cartucho_img.setImageResource(R.drawable.tcincocuatrocuatro);
+            if(cartuchos.getModelo().equals("T6642")){
+                ivCartucho.setImageResource(R.drawable.vertec);
             }
-            if(item.getModelo().contains("133")){
-                iv_cartucho_img.setImageResource(R.drawable.unotrestres);
+            if(cartuchos.getModelo().equals("T6641")){
+                ivCartucho.setImageResource(R.drawable.vertec);
             }
         }
 
         @Override
         public void onClick(View view) {
-            if(ConexionInternet.estaConectado(mContext)){
-                Intent abrirEditar = new Intent(mContext, Editar.class);
+            if(ConexionInternet.estaConectado(context)){
+                Intent abrirEditar = new Intent(context, EditarCartuchos.class);
                 int itemPosition = getLayoutPosition();
                 abrirEditar.putExtra("position", String.valueOf(itemPosition));
-                abrirEditar.putExtra("id", String.valueOf(item.getIdCartucho()));
-                abrirEditar.putExtra("cantidad", String.valueOf(item.getCantidad()));
-                abrirEditar.putExtra("url", url);
-                listadoCartuchos.mStartForResult.launch(abrirEditar);
+                abrirEditar.putExtra("id", String.valueOf(cartuchos.getIdCartucho()));
+                abrirEditar.putExtra("cantidad", String.valueOf(cartuchos.getCantidad()));
+                context.startActivity(abrirEditar);
             }else{
-                Toast.makeText(mContext, "Conéctate a una red.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Conéctate a una red.", Toast.LENGTH_SHORT).show();
             }
         }
     }

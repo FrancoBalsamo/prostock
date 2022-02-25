@@ -68,12 +68,12 @@ public class Cartuchos {
         this.cantidad = cantidad;
     }
 
-    public Cartuchos(int idCartucho, String modelo, String color, String fechaModificacion, int cantidad) {
+    public Cartuchos(int idCartucho, String modelo, String color, int cantidad, String fechaModificacion) {
         this.idCartucho = idCartucho;
         this.modelo = modelo;
         this.color = color;
-        this.fechaModificacion = fechaModificacion;
         this.cantidad = cantidad;
+        this.fechaModificacion = fechaModificacion;
     }
 
     public List<Cartuchos> getAll() {

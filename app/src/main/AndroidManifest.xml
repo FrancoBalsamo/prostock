@@ -14,7 +14,16 @@
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Editar"
+            android:name=".Actividades.Añadir.AnadirToners"
+            android:exported="false" />
+        <activity
+            android:name=".Actividades.Editar.EditarToners"
+            android:exported="false" />
+        <activity
+            android:name=".Actividades.Añadir.AnadirCartuchos"
+            android:exported="false" />
+        <activity
+            android:name=".Actividades.Editar.EditarCartuchos"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

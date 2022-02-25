@@ -64,11 +64,11 @@ public class Toners {
         this.cantidad = cantidad;
     }
 
-    public Toners(int idCartucho, String modelo, String color, String fechaModificacion, int cantidad) {
+    public Toners(int idCartucho, String modelo, String color, int cantidad, String fechaModificacion) {
         this.idToner = idCartucho;
         this.modelo = modelo;
         this.color = color;
-        this.fechaModificacion = fechaModificacion;
         this.cantidad = cantidad;
+        this.fechaModificacion = fechaModificacion;
     }
 }

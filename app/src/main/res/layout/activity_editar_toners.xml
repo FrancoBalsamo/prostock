@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Actividades.Editar.EditarCartuchos">
+    tools:context=".Actividades.Editar.EditarToners">
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -12,7 +12,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
-        android:id="@+id/linearLayoutEditar"
+        android:id="@+id/linearLayoutEditarToner"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -34,7 +34,7 @@
                 android:digits="0123456789"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:id="@+id/etEditarCantidad"
+                android:id="@+id/etEditarCantidadToner"
                 android:background="@drawable/diseno_edittext_editado"
                 android:textColor="@color/white"
                 android:layout_marginStart="10dp"
@@ -49,7 +49,7 @@
             <Button
                 android:background="@drawable/diseno_boton_editar"
                 android:textSize="15sp"
-                android:id="@+id/btnEditar"
+                android:id="@+id/btnEditarToner"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:text="@string/btnguardar"

@@ -11,30 +11,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import com.frabasoft.providusstock.Actividades.Editar.EditarToners;
 import com.frabasoft.providusstock.Clases.ConexionInternet;
 import com.frabasoft.providusstock.Clases.Toners;
-import com.frabasoft.providusstock.Editar;
-import com.frabasoft.providusstock.Fragmentos.ListadoToners;
 import com.frabasoft.providusstock.R;
 import java.util.ArrayList;
 
 public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewListaToners.ViewHolder> {
-    String url = "http://frabasoft.com.ar/pstock/editar_cantidad_toners.php";
     ArrayList<Toners> tonersArrayList;
     Context context;
-    ListadoToners listadoToners;
 
-    public RecyclerViewListaToners(Context context, ArrayList<Toners> tonersArrayList, ListadoToners listadoToners){
+    public RecyclerViewListaToners(Context context, ArrayList<Toners> tonersArrayList){
         this.tonersArrayList = tonersArrayList;
         this.context = context;
-        this.listadoToners = listadoToners;
     }
 
     @NonNull
     @Override
     public RecyclerViewListaToners.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType){
         View view = LayoutInflater.from(context).inflate(R.layout.vista_diseno_toner, viewGroup, false);
-        return new RecyclerViewListaToners.ViewHolder(view, listadoToners);
+        return new RecyclerViewListaToners.ViewHolder(view);
     }
 
     @Override
@@ -51,14 +47,10 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
         public TextView modeloColor;
         public TextView fechaModificacion;
         public ImageView ivToner;
-        public View view;
         Toners toners;
-        ListadoToners listadoToners;
 
-        public ViewHolder(View v, ListadoToners listadoToners){
+        public ViewHolder(View v){
             super(v);
-            view = v;
-            this.listadoToners = listadoToners;
 
             v.setOnClickListener(this);
             cardView = v.findViewById(R.id.cardViewToner);
@@ -158,13 +150,12 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
         @Override
         public void onClick(View view){
             if(ConexionInternet.estaConectado(context)){
-                Intent abrirEditar = new Intent(context, Editar.class);
+                Intent abrirEditar = new Intent(context, EditarToners.class);
                 int itemPosition = getLayoutPosition();
                 abrirEditar.putExtra("position", String.valueOf(itemPosition));
                 abrirEditar.putExtra("id", String.valueOf(toners.getIdToner()));
                 abrirEditar.putExtra("cantidad", String.valueOf(toners.getCantidad()));
-                abrirEditar.putExtra("url", url);
-                listadoToners.mStartForResult.launch(abrirEditar);
+                context.startActivity(abrirEditar);
             }else{
                 Toast.makeText(context, "Conéctate a una red.", Toast.LENGTH_SHORT).show();
             }
