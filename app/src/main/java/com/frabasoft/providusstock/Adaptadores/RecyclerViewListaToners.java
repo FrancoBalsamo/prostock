@@ -2,17 +2,16 @@ package com.frabasoft.providusstock.Adaptadores;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.frabasoft.providusstock.Actividades.Editar.EditarToners;
-import com.frabasoft.providusstock.Clases.ConexionInternet;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.R;
 import java.util.ArrayList;
@@ -149,15 +148,15 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
 
         @Override
         public void onClick(View view){
-            if(ConexionInternet.estaConectado(context)){
+            try{
                 Intent abrirEditar = new Intent(context, EditarToners.class);
                 int itemPosition = getLayoutPosition();
                 abrirEditar.putExtra("position", String.valueOf(itemPosition));
                 abrirEditar.putExtra("id", String.valueOf(toners.getIdToner()));
                 abrirEditar.putExtra("cantidad", String.valueOf(toners.getCantidad()));
                 context.startActivity(abrirEditar);
-            }else{
-                Toast.makeText(context, "Conéctate a una red.", Toast.LENGTH_SHORT).show();
+            }catch (Exception e){
+                Log.d("ADTToners", "onClick: "+ e.getMessage());
             }
         }
     }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.SQLite.Cartuchos.TablaCartuchos;
@@ -64,6 +65,21 @@ public class DBAdapter {
         }
     }
 
+    public boolean validarInsertCartuchos(String modelo, String color, Cartuchos cartuchos){
+        this.abrirDB();
+        String[]model = {String.valueOf(modelo)};
+        String consultaModelo = "SELECT * FROM "
+                + TablaCartuchos.CARTUCHOS_TABLA
+                + " WHERE " + TablaCartuchos.MODELO_CARTUCHO + " = ? AND " + TablaCartuchos.COLOR_CARTUCHO + " = " + color;
+        Cursor cursor = sqLiteDatabase.rawQuery(consultaModelo, model);
+        if(cursor.getCount() > 0){
+            cursor.close();
+            Toast.makeText(context, "Lo sentimos, este cartucho ya existe en el registro.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     public void insertarToners(Toners toners){
         try{
             abrirDB();
@@ -71,6 +87,21 @@ public class DBAdapter {
         }catch(SQLException sqlException){
             Log.d("DBAdapter", "insertarToners: ");
         }
+    }
+
+    public boolean validarInsertToners(String modelo, String color, Toners Toners){
+        this.abrirDB();
+        String[]model = {String.valueOf(modelo)};
+        String consultaModelo = "SELECT * FROM "
+                + TablaCartuchos.CARTUCHOS_TABLA
+                + " WHERE " + TablaToners.MODELO_TONER + " = ? AND " + TablaToners.COLOR_TONER + " = " + color;
+        Cursor cursor = sqLiteDatabase.rawQuery(consultaModelo, model);
+        if(cursor.getCount() > 0) {
+            cursor.close();
+            Toast.makeText(context, "Lo sentimos, este toner ya existe en el registro.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     public void editarCartuchos(Cartuchos cartuchos, String id){

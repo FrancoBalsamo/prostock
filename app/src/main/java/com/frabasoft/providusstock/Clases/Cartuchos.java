@@ -1,16 +1,11 @@
 package com.frabasoft.providusstock.Clases;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Cartuchos {
     private int idCartucho;
     private String modelo;
     private String color;
     private int cantidad;
-    private String usuarioModifico;
     private String fechaModificacion;
-    private List<Cartuchos> students = new ArrayList<>();
 
     public int getIdCartucho() {
         return idCartucho;
@@ -44,14 +39,6 @@ public class Cartuchos {
         this.cantidad = cantidad;
     }
 
-    public String getUsuarioModifico() {
-        return usuarioModifico;
-    }
-
-    public void setUsuarioModifico(String usuarioModifico) {
-        this.usuarioModifico = usuarioModifico;
-    }
-
     public String getFechaModificacion() {
         return fechaModificacion;
     }
@@ -62,21 +49,11 @@ public class Cartuchos {
 
     public Cartuchos() { }
 
-    public Cartuchos(String modelo, String color, int cantidad) {
-        this.modelo = modelo;
-        this.color = color;
-        this.cantidad = cantidad;
-    }
-
     public Cartuchos(int idCartucho, String modelo, String color, int cantidad, String fechaModificacion) {
         this.idCartucho = idCartucho;
         this.modelo = modelo;
         this.color = color;
         this.cantidad = cantidad;
         this.fechaModificacion = fechaModificacion;
-    }
-
-    public List<Cartuchos> getAll() {
-        return this.students;
     }
 }

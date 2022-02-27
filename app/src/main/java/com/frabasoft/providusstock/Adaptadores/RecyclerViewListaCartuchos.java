@@ -1,18 +1,18 @@
 package com.frabasoft.providusstock.Adaptadores;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.frabasoft.providusstock.Clases.Cartuchos;
-import com.frabasoft.providusstock.Clases.ConexionInternet;
 import com.frabasoft.providusstock.Actividades.Editar.EditarCartuchos;
 import com.frabasoft.providusstock.R;
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
     @NonNull
     @Override
     public RecyclerViewListaCartuchos.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        @SuppressLint("InflateParams")
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.vista_diseno_cartucho, null);
 
         return new RecyclerViewListaCartuchos.ViewHolder(view);
@@ -121,15 +122,15 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
 
         @Override
         public void onClick(View view) {
-            if(ConexionInternet.estaConectado(context)){
+            try{
                 Intent abrirEditar = new Intent(context, EditarCartuchos.class);
                 int itemPosition = getLayoutPosition();
                 abrirEditar.putExtra("position", String.valueOf(itemPosition));
                 abrirEditar.putExtra("id", String.valueOf(cartuchos.getIdCartucho()));
                 abrirEditar.putExtra("cantidad", String.valueOf(cartuchos.getCantidad()));
                 context.startActivity(abrirEditar);
-            }else{
-                Toast.makeText(context, "Conéctate a una red.", Toast.LENGTH_SHORT).show();
+            }catch (Exception e){
+                Log.d("ADTCart", "onClick: " + e.getMessage());
             }
         }
     }

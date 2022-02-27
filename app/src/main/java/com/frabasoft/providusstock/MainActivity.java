@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.frabasoft.providusstock.Actividades.Añadir.AnadirCartuchos;
 import com.frabasoft.providusstock.Clases.Cartuchos;
-import com.frabasoft.providusstock.Clases.ConexionInternet;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.Fragmentos.ListadoCartuchos;
 import com.frabasoft.providusstock.Fragmentos.ListadoToners;

@@ -5,7 +5,6 @@ public class Toners {
     private String modelo;
     private String color;
     private int cantidad;
-    private String usuarioModifico;
     private String fechaModificacion;
 
     public int getIdToner() {
@@ -40,14 +39,6 @@ public class Toners {
         this.cantidad = cantidad;
     }
 
-    public String getUsuarioModifico() {
-        return usuarioModifico;
-    }
-
-    public void setUsuarioModifico(String usuarioModifico) {
-        this.usuarioModifico = usuarioModifico;
-    }
-
     public String getFechaModificacion() {
         return fechaModificacion;
     }
@@ -57,12 +48,6 @@ public class Toners {
     }
 
     public Toners() { }
-
-    public Toners(String modelo, String color, int cantidad) {
-        this.modelo = modelo;
-        this.color = color;
-        this.cantidad = cantidad;
-    }
 
     public Toners(int idCartucho, String modelo, String color, int cantidad, String fechaModificacion) {
         this.idToner = idCartucho;

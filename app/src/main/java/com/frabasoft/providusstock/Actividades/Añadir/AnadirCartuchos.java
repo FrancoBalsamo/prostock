@@ -34,7 +34,9 @@ public class AnadirCartuchos extends AppCompatActivity {
             cartuchos.setCantidad(Integer.parseInt(cantidad.getText().toString()));
             cartuchos.setFechaModificacion(formatoHoy);
 
-            dbAdapter.insertarCartuchos(cartuchos);
+            if(dbAdapter.validarInsertCartuchos(modelo.getText().toString(), color.getText().toString(), cartuchos)){
+                dbAdapter.insertarCartuchos(cartuchos);
+            }
             finish();
         });
     }
