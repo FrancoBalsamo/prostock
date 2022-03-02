@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 import com.frabasoft.providusstock.Actividades.Añadir.AnadirCartuchos;
+import com.frabasoft.providusstock.Actividades.Añadir.AnadirToners;
 import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.Fragmentos.ListadoCartuchos;
@@ -76,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AnadirCartuchos.class);
             startActivity(intent);
         }else{
-            Toast.makeText(this, "Nada", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, AnadirToners.class);
+            startActivity(intent);
         }
         return true;
     }
