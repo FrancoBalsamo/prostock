@@ -70,7 +70,7 @@ public class DBAdapter {
         String[]model = {String.valueOf(modelo)};
         String consultaModelo = "SELECT * FROM "
                 + TablaCartuchos.CARTUCHOS_TABLA
-                + " WHERE " + TablaCartuchos.MODELO_CARTUCHO + " = ? AND " + TablaCartuchos.COLOR_CARTUCHO + " = " + color;
+                + " WHERE " + TablaCartuchos.MODELO_CARTUCHO + " = ? AND " + TablaCartuchos.COLOR_CARTUCHO + " IN ('" + color + "');";
         Cursor cursor = sqLiteDatabase.rawQuery(consultaModelo, model);
         if(cursor.getCount() > 0){
             cursor.close();
