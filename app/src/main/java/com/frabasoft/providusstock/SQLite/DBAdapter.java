@@ -61,7 +61,7 @@ public class DBAdapter {
             abrirDB();
             sqLiteDatabase.insert(TablaCartuchos.CARTUCHOS_TABLA, null, mapaCartuchos(cartuchos));
         }catch(SQLException sqlException){
-            Log.d("DBAdapter", "insertarCartuchos: ");
+            Log.d("DBAdapter", "insertarCartuchos: " + sqlException.getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ public class DBAdapter {
             abrirDB();
             sqLiteDatabase.insert(TablaToners.TONERS_TABLA, null, mapaToners(toners));
         }catch(SQLException sqlException){
-            Log.d("DBAdapter", "insertarToners: ");
+            Log.d("DBAdapter", "insertarToners: " + sqlException.getMessage());
         }
     }
 
@@ -93,7 +93,7 @@ public class DBAdapter {
         this.abrirDB();
         String[]model = {String.valueOf(modelo)};
         String consultaModelo = "SELECT * FROM "
-                + TablaCartuchos.CARTUCHOS_TABLA
+                + TablaToners.TONERS_TABLA
                 + " WHERE " + TablaToners.MODELO_TONER + " = ? AND " + TablaToners.COLOR_TONER + " IN ('" + color + "');";
         Cursor cursor = sqLiteDatabase.rawQuery(consultaModelo, model);
         if(cursor.getCount() > 0) {
