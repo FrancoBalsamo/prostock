@@ -34,7 +34,7 @@ public class AnadirToners extends AppCompatActivity {
             toners.setCantidad(Integer.parseInt(cantidad.getText().toString()));
             toners.setFechaModificacion(formatoHoy);
 
-            if(dbAdapter.validarInsertToners(modelo.getText().toString(), color.getText().toString(), toners)){
+            if(dbAdapter.validarInsertToners(modelo.getText().toString(), color.getText().toString())){
                 dbAdapter.insertarToners(toners);
             }
             finish();
