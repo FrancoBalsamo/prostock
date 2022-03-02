@@ -1,5 +1,6 @@
 package com.frabasoft.providusstock.Adaptadores;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frabasoft.providusstock.Actividades.Editar.EditarToners;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.R;
+import com.frabasoft.providusstock.SQLite.DBAdapter;
 import java.util.ArrayList;
 
 public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewListaToners.ViewHolder> {
@@ -149,12 +151,22 @@ public class RecyclerViewListaToners extends RecyclerView.Adapter<RecyclerViewLi
         @Override
         public void onClick(View view){
             try{
-                Intent abrirEditar = new Intent(context, EditarToners.class);
-                int itemPosition = getLayoutPosition();
-                abrirEditar.putExtra("position", String.valueOf(itemPosition));
-                abrirEditar.putExtra("id", String.valueOf(toners.getIdToner()));
-                abrirEditar.putExtra("cantidad", String.valueOf(toners.getCantidad()));
-                context.startActivity(abrirEditar);
+                new AlertDialog.Builder(context)
+                        .setTitle("¡Atención!")
+                        .setMessage("¿Desea eliminar o modificar el item seleccionado?")
+                        .setPositiveButton("Modificar", (dialogInterface, i) -> {
+                            Intent abrirEditar = new Intent(context, EditarToners.class);
+                            int itemPosition = getLayoutPosition();
+                            abrirEditar.putExtra("position", String.valueOf(itemPosition));
+                            abrirEditar.putExtra("id", String.valueOf(toners.getIdToner()));
+                            abrirEditar.putExtra("cantidad", String.valueOf(toners.getCantidad()));
+                            context.startActivity(abrirEditar);
+                        })
+                        .setNegativeButton("Eliminar", (dialogInterface, i) -> {
+                            int id = toners.getIdToner();
+                            new DBAdapter(context).eliminarToners(id);
+                        })
+                        .show();
             }catch (Exception e){
                 Log.d("ADTToners", "onClick: "+ e.getMessage());
             }

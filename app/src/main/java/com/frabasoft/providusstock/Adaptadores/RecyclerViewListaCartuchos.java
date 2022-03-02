@@ -1,7 +1,9 @@
 package com.frabasoft.providusstock.Adaptadores;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,12 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.Actividades.Editar.EditarCartuchos;
 import com.frabasoft.providusstock.R;
+import com.frabasoft.providusstock.SQLite.DBAdapter;
+
 import java.util.ArrayList;
 
 public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerViewListaCartuchos.ViewHolder> {
@@ -123,15 +129,30 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
         @Override
         public void onClick(View view) {
             try{
-                Intent abrirEditar = new Intent(context, EditarCartuchos.class);
-                int itemPosition = getLayoutPosition();
-                abrirEditar.putExtra("position", String.valueOf(itemPosition));
-                abrirEditar.putExtra("id", String.valueOf(cartuchos.getIdCartucho()));
-                abrirEditar.putExtra("cantidad", String.valueOf(cartuchos.getCantidad()));
-                context.startActivity(abrirEditar);
+                new AlertDialog.Builder(context)
+                        .setTitle("¡Atención!")
+                        .setMessage("¿Desea eliminar o modificar el item seleccionado?")
+                        .setPositiveButton("Modificar", (dialogInterface, i) -> {
+                            Intent abrirEditar = new Intent(context, EditarCartuchos.class);
+                            int itemPosition = getLayoutPosition();
+                            abrirEditar.putExtra("position", String.valueOf(itemPosition));
+                            abrirEditar.putExtra("id", String.valueOf(cartuchos.getIdCartucho()));
+                            abrirEditar.putExtra("cantidad", String.valueOf(cartuchos.getCantidad()));
+                            context.startActivity(abrirEditar);
+                        })
+                        .setNegativeButton("Eliminar", (dialogInterface, i) -> {
+                            int id = cartuchos.getIdCartucho();
+                            new DBAdapter(context).eliminarCartucho(id);
+                        })
+                        .show();
+
             }catch (Exception e){
                 Log.d("ADTCart", "onClick: " + e.getMessage());
             }
+        }
+
+        private void alertDialog(){
+
         }
     }
 }
