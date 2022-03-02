@@ -65,7 +65,7 @@ public class DBAdapter {
         }
     }
 
-    public boolean validarInsertCartuchos(String modelo, String color, Cartuchos cartuchos){
+    public boolean validarInsertCartuchos(String modelo, String color){
         this.abrirDB();
         String[]model = {String.valueOf(modelo)};
         String consultaModelo = "SELECT * FROM "
