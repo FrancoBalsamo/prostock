@@ -89,12 +89,12 @@ public class DBAdapter {
         }
     }
 
-    public boolean validarInsertToners(String modelo, String color, Toners Toners){
+    public boolean validarInsertToners(String modelo, String color){
         this.abrirDB();
         String[]model = {String.valueOf(modelo)};
         String consultaModelo = "SELECT * FROM "
                 + TablaCartuchos.CARTUCHOS_TABLA
-                + " WHERE " + TablaToners.MODELO_TONER + " = ? AND " + TablaToners.COLOR_TONER + " = " + color;
+                + " WHERE " + TablaToners.MODELO_TONER + " = ? AND " + TablaToners.COLOR_TONER + " IN ('" + color + "');";
         Cursor cursor = sqLiteDatabase.rawQuery(consultaModelo, model);
         if(cursor.getCount() > 0) {
             cursor.close();
