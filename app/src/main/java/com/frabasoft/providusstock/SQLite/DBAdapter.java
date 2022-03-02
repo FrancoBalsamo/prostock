@@ -5,12 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.os.Environment;
+import android.os.FileUtils;
 import android.util.Log;
 import android.widget.Toast;
 import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.SQLite.Cartuchos.TablaCartuchos;
 import com.frabasoft.providusstock.SQLite.Toners.TablaToners;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class DBAdapter {
     Context context;

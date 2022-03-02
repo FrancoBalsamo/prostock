@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.Toast;
 import com.frabasoft.providusstock.Actividades.Añadir.AnadirCartuchos;
 import com.frabasoft.providusstock.Actividades.Añadir.AnadirToners;
 import com.frabasoft.providusstock.Clases.Cartuchos;
@@ -21,7 +20,6 @@ import com.frabasoft.providusstock.Fragmentos.ListadoCartuchos;
 import com.frabasoft.providusstock.Fragmentos.ListadoToners;
 import com.frabasoft.providusstock.Fragmentos.NoData;
 import com.frabasoft.providusstock.SQLite.DBAdapter;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
