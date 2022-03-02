@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -65,17 +67,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Fragment fragmentActual = getSupportFragmentManager().findFragmentById(R.id.FrameLayoutListado);
-        if(fragmentActual instanceof ListadoCartuchos){
-            Intent intent = new Intent(MainActivity.this, AnadirCartuchos.class);
-            startActivity(intent);
-        }else if(fragmentActual instanceof ListadoToners){
-            Intent intent = new Intent(MainActivity.this, AnadirToners.class);
-            startActivity(intent);
+        switch (item.getItemId()){
+            case R.id.agregarCartucho:
+                Intent intentCartucho = new Intent(MainActivity.this, AnadirCartuchos.class);
+                startActivity(intentCartucho);
+                return true;
+            case R.id.agregarToner:
+                Intent intentToner = new Intent(MainActivity.this, AnadirToners.class);
+                startActivity(intentToner);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return true;
     }
 
     private void cargarFragmentCartuchos(){
