@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/agregarCartucho"
-        android:title="@string/anadir"
+        android:title="@string/anadirCartucho"
+        />
+    <item
+        android:id="@+id/agregarToner"
+        android:title="@string/anadirToner"
         />
 </menu>
