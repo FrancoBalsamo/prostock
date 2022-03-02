@@ -36,8 +36,8 @@ public class AnadirCartuchos extends AppCompatActivity {
 
             if(dbAdapter.validarInsertCartuchos(modelo.getText().toString(), color.getText().toString(), cartuchos)){
                 dbAdapter.insertarCartuchos(cartuchos);
+                finish();
             }
-            finish();
         });
     }
 
