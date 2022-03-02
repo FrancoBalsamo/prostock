@@ -78,9 +78,9 @@ public class DBAdapter {
         }
     }
 
-    public boolean eliminarCartucho(int id){
+    public void eliminarCartucho(int id){
         abrirDB();
-        return sqLiteDatabase.delete(TablaCartuchos.CARTUCHOS_TABLA, TablaCartuchos.ID_CARTUCHO + " = " + id, null) > 0;
+        sqLiteDatabase.delete(TablaCartuchos.CARTUCHOS_TABLA, TablaCartuchos.ID_CARTUCHO + " = " + id, null);
     }
 
     public boolean validarInsertCartuchos(String modelo, String color){
@@ -128,9 +128,9 @@ public class DBAdapter {
         }
     }
 
-    public boolean eliminarToners(int id){
+    public void eliminarToners(int id){
         abrirDB();
-        return sqLiteDatabase.delete(TablaToners.TONERS_TABLA, TablaToners.ID_TONER + " = " + id, null) > 0;
+        sqLiteDatabase.delete(TablaToners.TONERS_TABLA, TablaToners.ID_TONER + " = " + id, null);
     }
 
     public boolean validarInsertToners(String modelo, String color){
