@@ -65,6 +65,24 @@ public class DBAdapter {
         }
     }
 
+    public void editarCartuchos(Cartuchos cartuchos, String id){
+        try{
+            abrirDB();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(TablaCartuchos.CANTIDAD_CARTUCHO, cartuchos.getCantidad());
+            contentValues.put(TablaCartuchos.FECHA_MODIFICACION_CANTIDAD_CARTUCHO, cartuchos.getFechaModificacion());
+            String[] idValor = {String.valueOf(id)};
+            sqLiteDatabase.update(TablaCartuchos.CARTUCHOS_TABLA, contentValues, TablaCartuchos.ID_CARTUCHO + " = ?", idValor);
+        }catch(SQLException sqlException){
+            Log.d("DBAdapter", "editarCartuchos: ");
+        }
+    }
+
+    public boolean eliminarCartucho(int id){
+        abrirDB();
+        return sqLiteDatabase.delete(TablaCartuchos.CARTUCHOS_TABLA, TablaCartuchos.ID_CARTUCHO + " = " + id, null) > 0;
+    }
+
     public boolean validarInsertCartuchos(String modelo, String color){
         this.abrirDB();
         String[]model = {String.valueOf(modelo)};
@@ -80,6 +98,14 @@ public class DBAdapter {
         return true;
     }
 
+    public Cursor traerTodosToners(){
+        String[] columnas = {TablaToners.ID_TONER, TablaToners.MODELO_TONER,
+                TablaToners.COLOR_TONER, TablaToners.CANTIDAD_TONER,
+                TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER};
+        return sqLiteDatabase.query(TablaToners.TONERS_TABLA, columnas, null, null, null, null,
+                TablaToners.MODELO_TONER +" ASC, " + TablaToners.COLOR_TONER + " ASC");
+    }
+
     public void insertarToners(Toners toners){
         try{
             abrirDB();
@@ -87,6 +113,24 @@ public class DBAdapter {
         }catch(SQLException sqlException){
             Log.d("DBAdapter", "insertarToners: " + sqlException.getMessage());
         }
+    }
+
+    public void editarToners(Toners toners, String id){
+        try{
+            abrirDB();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(TablaToners.CANTIDAD_TONER, toners.getCantidad());
+            contentValues.put(TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER, toners.getFechaModificacion());
+            String[] idValor = {String.valueOf(id)};
+            sqLiteDatabase.update(TablaToners.TONERS_TABLA, contentValues, TablaToners.ID_TONER + " = ?", idValor);
+        }catch(SQLException sqlException){
+            Log.d("DBAdapter", "editarToners: ");
+        }
+    }
+
+    public boolean eliminarToners(int id){
+        abrirDB();
+        return sqLiteDatabase.delete(TablaToners.TONERS_TABLA, TablaToners.ID_TONER + " = " + id, null) > 0;
     }
 
     public boolean validarInsertToners(String modelo, String color){
@@ -104,45 +148,11 @@ public class DBAdapter {
         return true;
     }
 
-    public void editarCartuchos(Cartuchos cartuchos, String id){
-        try{
-            abrirDB();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(TablaCartuchos.CANTIDAD_CARTUCHO, cartuchos.getCantidad());
-            contentValues.put(TablaCartuchos.FECHA_MODIFICACION_CANTIDAD_CARTUCHO, cartuchos.getFechaModificacion());
-            String[] idValor = {String.valueOf(id)};
-            sqLiteDatabase.update(TablaCartuchos.CARTUCHOS_TABLA, contentValues, TablaCartuchos.ID_CARTUCHO + " = ?", idValor);
-        }catch(SQLException sqlException){
-            Log.d("DBAdapter", "editarCartuchos: ");
-        }
-    }
-
-    public void editarToners(Toners toners, String id){
-        try{
-            abrirDB();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(TablaToners.CANTIDAD_TONER, toners.getCantidad());
-            contentValues.put(TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER, toners.getFechaModificacion());
-            String[] idValor = {String.valueOf(id)};
-            sqLiteDatabase.update(TablaToners.TONERS_TABLA, contentValues, TablaToners.ID_TONER + " = ?", idValor);
-        }catch(SQLException sqlException){
-            Log.d("DBAdapter", "editarToners: ");
-        }
-    }
-
     public Cursor traerTodosCartuchos(){
         String[] columnas = {TablaCartuchos.ID_CARTUCHO, TablaCartuchos.MODELO_CARTUCHO,
                 TablaCartuchos.COLOR_CARTUCHO, TablaCartuchos.CANTIDAD_CARTUCHO,
                 TablaCartuchos.FECHA_MODIFICACION_CANTIDAD_CARTUCHO};
         return sqLiteDatabase.query(TablaCartuchos.CARTUCHOS_TABLA, columnas, null, null, null, null,
                  TablaCartuchos.MODELO_CARTUCHO +" ASC, " + TablaCartuchos.COLOR_CARTUCHO + " ASC");
-    }
-
-    public Cursor traerTodosToners(){
-        String[] columnas = {TablaToners.ID_TONER, TablaToners.MODELO_TONER,
-                TablaToners.COLOR_TONER, TablaToners.CANTIDAD_TONER,
-                TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER};
-        return sqLiteDatabase.query(TablaToners.TONERS_TABLA, columnas, null, null, null, null,
-                TablaToners.MODELO_TONER +" ASC, " + TablaToners.COLOR_TONER + " ASC");
     }
 }
