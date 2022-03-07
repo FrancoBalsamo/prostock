@@ -98,12 +98,12 @@ public class DBAdapter {
         return true;
     }
 
-    public Cursor traerTodosToners(){
-        String[] columnas = {TablaToners.ID_TONER, TablaToners.MODELO_TONER,
-                TablaToners.COLOR_TONER, TablaToners.CANTIDAD_TONER,
-                TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER};
-        return sqLiteDatabase.query(TablaToners.TONERS_TABLA, columnas, null, null, null, null,
-                TablaToners.MODELO_TONER +" ASC, " + TablaToners.COLOR_TONER + " ASC");
+    public Cursor traerTodosCartuchos(){
+        String[] columnas = {TablaCartuchos.ID_CARTUCHO, TablaCartuchos.MODELO_CARTUCHO,
+                TablaCartuchos.COLOR_CARTUCHO, TablaCartuchos.CANTIDAD_CARTUCHO,
+                TablaCartuchos.FECHA_MODIFICACION_CANTIDAD_CARTUCHO};
+        return sqLiteDatabase.query(TablaCartuchos.CARTUCHOS_TABLA, columnas, null, null, null, null,
+                TablaCartuchos.MODELO_CARTUCHO +" ASC, " + TablaCartuchos.COLOR_CARTUCHO + " ASC");
     }
 
     public void insertarToners(Toners toners){
@@ -148,11 +148,11 @@ public class DBAdapter {
         return true;
     }
 
-    public Cursor traerTodosCartuchos(){
-        String[] columnas = {TablaCartuchos.ID_CARTUCHO, TablaCartuchos.MODELO_CARTUCHO,
-                TablaCartuchos.COLOR_CARTUCHO, TablaCartuchos.CANTIDAD_CARTUCHO,
-                TablaCartuchos.FECHA_MODIFICACION_CANTIDAD_CARTUCHO};
-        return sqLiteDatabase.query(TablaCartuchos.CARTUCHOS_TABLA, columnas, null, null, null, null,
-                 TablaCartuchos.MODELO_CARTUCHO +" ASC, " + TablaCartuchos.COLOR_CARTUCHO + " ASC");
+    public Cursor traerTodosToners(){
+        String[] columnas = {TablaToners.ID_TONER, TablaToners.MODELO_TONER,
+                TablaToners.COLOR_TONER, TablaToners.CANTIDAD_TONER,
+                TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER};
+        return sqLiteDatabase.query(TablaToners.TONERS_TABLA, columnas, null, null, null, null,
+                TablaToners.MODELO_TONER +" ASC, " + TablaToners.COLOR_TONER + " ASC");
     }
 }
