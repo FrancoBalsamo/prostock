@@ -1,10 +1,13 @@
 package com.frabasoft.providusstock.Fragmentos;
 
+import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +40,18 @@ public class ListadoToners extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
+        alerta.setText(getString(R.string.detalle));
+
         listadoSQLiteToners();
         adaptador = new RecyclerViewListaToners(getActivity(), listaToners);
 
         alerta.setOnClickListener(v -> {
+            try {
+                listadoStockMinimo();
+            }catch (Exception e){
+                Log.d("alerta", "listadoStockMinimo: " + e.getMessage());
+            }
         });
-
         return view;
     }
 
@@ -72,5 +81,20 @@ public class ListadoToners extends Fragment {
             recyclerView.setAdapter(adaptador);
         }
         dbAdapter.cerrarDB();
+    }
+
+    private void listadoStockMinimo(){
+        StringBuilder mensaje = new StringBuilder();
+        if(listaToners.size() >= 1){
+            for(int i = 0; i<  listaToners.size(); i++){
+                if(listaToners.get(i).getCantidad() <= 2){
+                    mensaje.append(listaToners.get(i).getModelo()).append(" ").append(listaToners.get(i).getColor()).append(" ").append(listaToners.get(i).getCantidad()).append("\n");
+                }
+            }
+        }
+        new AlertDialog.Builder(getContext())
+                .setTitle("¡Atención!")
+                .setMessage(mensaje.toString())
+                .show();
     }
 }

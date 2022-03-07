@@ -1,17 +1,24 @@
 package com.frabasoft.providusstock.Fragmentos;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.frabasoft.providusstock.Adaptadores.RecyclerViewListaCartuchos;
 import com.frabasoft.providusstock.Clases.Cartuchos;
+import com.frabasoft.providusstock.MainActivity;
 import com.frabasoft.providusstock.R;
 import com.frabasoft.providusstock.SQLite.DBAdapter;
 import java.util.ArrayList;
@@ -37,11 +44,17 @@ public class ListadoCartuchos extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
+        alerta.setText(getString(R.string.detalle));
+
         listadoCartuchosSQLite();
         adaptador = new RecyclerViewListaCartuchos(getActivity(), listaCartuchos);
 
         alerta.setOnClickListener(v -> {
-
+            try {
+                listadoStockMinimo();
+            }catch (Exception e){
+                Log.d("alerta", "listadoStockMinimo: " + e.getMessage());
+            }
         });
         return view;
     }
@@ -72,5 +85,20 @@ public class ListadoCartuchos extends Fragment {
             recyclerView.setAdapter(adaptador);
         }
         dbAdapter.cerrarDB();
+    }
+
+    private void listadoStockMinimo(){
+        StringBuilder mensaje = new StringBuilder();
+        if(listaCartuchos.size() >= 1){
+            for(int i = 0; i<  listaCartuchos.size(); i++){
+                if(listaCartuchos.get(i).getCantidad() <= 4){
+                    mensaje.append(listaCartuchos.get(i).getModelo()).append(" ").append(listaCartuchos.get(i).getColor()).append(" ").append(listaCartuchos.get(i).getCantidad()).append("\n");
+                }
+            }
+        }
+        new AlertDialog.Builder(getContext())
+                .setTitle("¡Atención!")
+                .setMessage(mensaje.toString())
+        .show();
     }
 }
