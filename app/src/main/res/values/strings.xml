@@ -12,6 +12,7 @@
     <string name="anadirCartucho">Añadir Cartucho</string>
     <string name="anadirToner">Añadir Toner</string>
     <string name="fragmento_cartuchos_listado">ListadoCartuchosTag</string>
+    <string name="detalle">Presione para ver el detalle.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
