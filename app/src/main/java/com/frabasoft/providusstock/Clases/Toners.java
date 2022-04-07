@@ -6,6 +6,7 @@ public class Toners {
     private String color;
     private int cantidad;
     private String fechaModificacion;
+    private String proveedor;
 
     public int getIdToner() {
         return idToner;
@@ -45,6 +46,14 @@ public class Toners {
 
     public void setFechaModificacion(String fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
     }
 
     public Toners() { }

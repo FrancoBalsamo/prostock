@@ -149,10 +149,37 @@ public class DBAdapter {
     }
 
     public Cursor traerTodosToners(){
-        String[] columnas = {TablaToners.ID_TONER, TablaToners.MODELO_TONER,
-                TablaToners.COLOR_TONER, TablaToners.CANTIDAD_TONER,
+        String[] columnas = {
+                TablaToners.ID_TONER,
+                TablaToners.MODELO_TONER,
+                TablaToners.COLOR_TONER,
+                TablaToners.CANTIDAD_TONER,
                 TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER};
         return sqLiteDatabase.query(TablaToners.TONERS_TABLA, columnas, null, null, null, null,
+                TablaToners.MODELO_TONER +" ASC, " + TablaToners.COLOR_TONER + " ASC");
+    }
+
+    public Cursor traerTodosTonersMacrox(){
+        String[] columnas = {
+                TablaToners.ID_TONER,
+                TablaToners.MODELO_TONER,
+                TablaToners.COLOR_TONER,
+                TablaToners.CANTIDAD_TONER,
+                TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER
+        };
+        return sqLiteDatabase.query(TablaToners.TONERS_TABLA, columnas, TablaToners.ID_TONER + " IN (1,2,3,4,13,16,17,18,19,20,21)", null, null, null,
+                TablaToners.MODELO_TONER +" ASC, " + TablaToners.COLOR_TONER + " ASC");
+    }
+
+    public Cursor traerTodosTonersEvolusoft(){
+        String[] columnas = {
+                TablaToners.ID_TONER,
+                TablaToners.MODELO_TONER,
+                TablaToners.COLOR_TONER,
+                TablaToners.CANTIDAD_TONER,
+                TablaToners.FECHA_MODIFICACION_CANTIDAD_TONER
+        };
+        return sqLiteDatabase.query(TablaToners.TONERS_TABLA, columnas, TablaToners.ID_TONER + " IN (5,6,7,8,9,10,11,12,14,15,25,22,23)", null, null, null,
                 TablaToners.MODELO_TONER +" ASC, " + TablaToners.COLOR_TONER + " ASC");
     }
 }

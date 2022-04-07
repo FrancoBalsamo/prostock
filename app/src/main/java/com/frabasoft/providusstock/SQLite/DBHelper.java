@@ -23,14 +23,5 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TablaCartuchos.CARTUCHOS_TABLA);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TablaToners.TONERS_TABLA);
-        if(newVersion > oldVersion){
-            sqLiteDatabase.execSQL("ALTER TABLE " + TablaToners.TONERS_TABLA + " ADD COLUMN proveedor TEXT" );
-            sqLiteDatabase.execSQL("UPDATE " + TablaToners.TONERS_TABLA + " SET proveedor = MACROX WHERE " + TablaToners.ID_TONER + " IN (1,2,3,4,13,16,17,18,19,20,21)" );
-            sqLiteDatabase.execSQL("UPDATE " + TablaToners.TONERS_TABLA + " SET proveedor = EVOLUSOFT WHERE " + TablaToners.ID_TONER + " IN (5,6,7,8,9,10,11,12,14,15,25,22,23)" );
-        }
-        onCreate(sqLiteDatabase);
-    }
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {    }
 }

@@ -89,6 +89,44 @@ public class ListadoToners extends Fragment {
         dbAdapter.cerrarDB();
     }
 
+    private void listadoSQLiteTonersEvolusoft() {
+        listaToners.clear();
+        DBAdapter dbAdapter = new DBAdapter(getContext());
+        dbAdapter.abrirDB();
+
+        Cursor cursor = dbAdapter.traerTodosTonersEvolusoft();
+        while(cursor.moveToNext()){
+            int id = cursor.getInt(0);
+            String modelo = cursor.getString(1);
+            String color = cursor.getString(2);
+            int cantidad = cursor.getInt(3);
+            String fechaModificacion = cursor.getString(4);
+
+            Toners toners = new Toners(id, modelo, color, cantidad, fechaModificacion);
+            listaToners.add(toners);
+        }
+        dbAdapter.cerrarDB();
+    }
+
+    private void listadoSQLiteTonersMacrox() {
+        listaToners.clear();
+        DBAdapter dbAdapter = new DBAdapter(getContext());
+        dbAdapter.abrirDB();
+
+        Cursor cursor = dbAdapter.traerTodosTonersMacrox();
+        while(cursor.moveToNext()){
+            int id = cursor.getInt(0);
+            String modelo = cursor.getString(1);
+            String color = cursor.getString(2);
+            int cantidad = cursor.getInt(3);
+            String fechaModificacion = cursor.getString(4);
+
+            Toners toners = new Toners(id, modelo, color, cantidad, fechaModificacion);
+            listaToners.add(toners);
+        }
+        dbAdapter.cerrarDB();
+    }
+
     private void listadoStockMinimo(){
         StringBuilder mensaje = new StringBuilder();
         if(listaToners.size() >= 1){
@@ -107,62 +145,34 @@ public class ListadoToners extends Fragment {
                     StringBuilder enviarPedido = new StringBuilder();
                     if(listaToners.size() >= 1){
                         for(int val = 0; val <  listaToners.size(); val++){
-                            if(listaToners.get(val).getModelo().equals("AOX5195")
-                                    && listaToners.get(val).getModelo().equals("AOX5295")
-                                    && listaToners.get(val).getModelo().equals("AOX5395")
-                                    && listaToners.get(val).getModelo().equals("AOX5495")
-                                    && listaToners.get(val).getModelo().equals("GPR-39")
-                                    && listaToners.get(val).getModelo().equals("QT650")
-                                    && listaToners.get(val).getModelo().equals("TN360")
-                                    && listaToners.get(val).getModelo().equals("TN450")
-                                    && listaToners.get(val).getModelo().equals("TN580")
-                                    && listaToners.get(val).getModelo().equals("TN750")
-                                    && listaToners.get(val).getModelo().equals("TN890")){//para macrox
-                                if(listaToners.get(val).getCantidad() <= 4){
-                                    enviarPedido.append(listaToners.get(val).getModelo())
-                                            .append(" ")
-                                            .append(listaToners.get(val).getColor())
-                                            .append(" ").append(4 - listaToners.get(val).getCantidad())
-                                            .append("\n");
-                                    try {
-                                        abrirWhatsapp(requireContext(), "543514033968", inicioMensajeMacrox + enviarPedido);
-                                    }catch (Exception e){
-                                        Log.d("Error", "macrox: " + e.getMessage());
-                                    }
-                                }
+                            listadoSQLiteTonersMacrox();
+                            if(listaToners.get(val).getCantidad() <= 2){
+                                enviarPedido.append(listaToners.get(val).getModelo())
+                                        .append(" ")
+                                        .append(listaToners.get(val).getColor())
+                                        .append(" ").append(2 - listaToners.get(val).getCantidad())
+                                        .append("\n");
                             }
                         }
                     }
+                    abrirWhatsapp(requireContext(), "543514033968", inicioMensajeMacrox + enviarPedido);
                 })
                 .setNegativeButton("EVOLUSOFT", (dialogInterface, i) -> {
                     String inicioMensajeEvolusoft = "René, estaría necesitando los siguientes toners: \n";
                     StringBuilder enviarPedido = new StringBuilder();
                     if(listaToners.size() >= 1){
                         for(int val = 0; val<  listaToners.size(); val++){
-                            if(listaToners.get(val).getModelo().equals("CE410A")
-                                    && listaToners.get(val).getModelo().equals("CE411A")
-                                    && listaToners.get(val).getModelo().equals("CE412A")
-                                    && listaToners.get(val).getModelo().equals("CE413A")
-                                    && listaToners.get(val).getModelo().equals("CE435")
-                                    && listaToners.get(val).getModelo().equals("CF217A")
-                                    && listaToners.get(val).getModelo().equals("CF248A")
-                                    && listaToners.get(val).getModelo().equals("CF283")
-                                    && listaToners.get(val).getModelo().equals("LASAMD111")
-                                    && listaToners.get(val).getModelo().equals("MLTD101S")
-                                    && listaToners.get(val).getModelo().equals("Q2612A")
-                                    && listaToners.get(val).getModelo().equals("W1103A")
-                                    && listaToners.get(val).getModelo().equals("W1105A")){//para EVOLUSOFT
-                                if(listaToners.get(val).getCantidad() <= 4){
-                                    enviarPedido.append(listaToners.get(val).getModelo())
-                                            .append(" ")
-                                            .append(listaToners.get(val).getColor())
-                                            .append(" ").append(4 - listaToners.get(val).getCantidad())
-                                            .append("\n");
-                                    abrirWhatsapp(requireContext(), "543515443150", inicioMensajeEvolusoft + enviarPedido);
-                                }
+                            listadoSQLiteTonersEvolusoft();
+                            if(listaToners.get(val).getCantidad() <= 2){
+                                enviarPedido.append(listaToners.get(val).getModelo())
+                                        .append(" ")
+                                        .append(listaToners.get(val).getColor())
+                                        .append(" ").append(2 - listaToners.get(val).getCantidad())
+                                        .append("\n");
                             }
                         }
                     }
+                    abrirWhatsapp(requireContext(), "543515443150", inicioMensajeEvolusoft + enviarPedido);
                 })
                 .show();
     }

@@ -10,6 +10,7 @@ public class TablaToners {
     public static final String COLOR_TONER = "color";
     public static final String CANTIDAD_TONER = "cantidad";
     public static final String FECHA_MODIFICACION_CANTIDAD_TONER = "fechaModificacionCantidad";
+    public static final String PROVEEDOR_TONER = "proveedor";
 
     //Creación de la tabla
 
