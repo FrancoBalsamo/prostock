@@ -141,7 +141,6 @@ public class RecyclerViewListaCartuchos extends RecyclerView.Adapter<RecyclerVie
                             new DBAdapter(context).eliminarCartucho(id);
                         })
                         .show();
-
             }catch (Exception e){
                 Log.d("ADTCart", "onClick: " + e.getMessage());
             }
