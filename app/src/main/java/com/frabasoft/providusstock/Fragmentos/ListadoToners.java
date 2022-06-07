@@ -2,7 +2,6 @@ package com.frabasoft.providusstock.Fragmentos;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.frabasoft.providusstock.Adaptadores.RecyclerViewListaToners;
 import com.frabasoft.providusstock.Clases.Toners;
 import com.frabasoft.providusstock.R;

@@ -1,11 +1,8 @@
 package com.frabasoft.providusstock.Fragmentos;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,14 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.frabasoft.providusstock.Adaptadores.RecyclerViewListaCartuchos;
 import com.frabasoft.providusstock.Clases.Cartuchos;
 import com.frabasoft.providusstock.R;
 import com.frabasoft.providusstock.SQLite.DBAdapter;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class ListadoCartuchos extends Fragment {
@@ -111,38 +104,24 @@ public class ListadoCartuchos extends Fragment {
                     if(listaCartuchos.size() >= 1){
                         for(int val = 0; val<  listaCartuchos.size(); val++){
                             if(listaCartuchos.get(val).getCantidad() <= 4){
-                                String inicioMensaje = "René, estaría necesitando los siguientes cartuchos: \n";
                                 enviarPedido.append(listaCartuchos.get(val).getModelo())
                                         .append(" ")
                                         .append(listaCartuchos.get(val).getColor())
                                         .append(" ").append(6 - listaCartuchos.get(val).getCantidad())
                                         .append("\n");
-                                abrirWhatsapp(requireContext(), inicioMensaje + enviarPedido);
                             }
                         }
                     }
+                    enviarMailLorena(enviarPedido);
                 })
                 .show();
     }
-
-    private void abrirWhatsapp(Context context, String pedido){
-        PackageManager packageManager = context.getPackageManager();
-        try{
-            packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
-            Intent abrir = new Intent(Intent.ACTION_VIEW);
-            String url;
-            try {
-                url = "https://api.whatsapp.com/send?phone=543515443150&text=" + URLEncoder.encode(pedido, "UTF-8");
-
-                abrir.setPackage("com.whatsapp");
-                abrir.setData(Uri.parse(url));
-                startActivity(abrir);
-            } catch (UnsupportedEncodingException e) {
-                Log.d("AbrirChat", "abrirChatEvolusoft: " + e.getMessage());
-                e.printStackTrace();
-            }
-        }catch (PackageManager.NameNotFoundException notFoundException){
-            Log.d("WhatsAppCart", "instalacionWhatsApp: " + notFoundException.getMessage());
-        }
+    private void enviarMailLorena(StringBuilder pedido){
+        Intent sendMail = new Intent(Intent.ACTION_SEND);
+        sendMail.putExtra(Intent.EXTRA_EMAIL, new String[]{"lorena@providus.com.ar"});
+        sendMail.putExtra(Intent.EXTRA_SUBJECT, "Pedido de Cartuchos");
+        sendMail.putExtra(Intent.EXTRA_TEXT, "Lore, necesito lo siguiente en cartuchos: \n" + pedido);
+        sendMail.setType("text/plain");
+        startActivity(Intent.createChooser(sendMail, "Elige un cliente de Mail."));
     }
 }
